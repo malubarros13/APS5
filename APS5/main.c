@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "processo.h"
-#include "geral_process.h"
+#include "auxiliar.h"
 #include "round_robin.h"
 #include "priority.h"
 
@@ -67,7 +67,7 @@ int main() {
     }
 
 
-    /* Executa os algoritmos usando o array alocado com malloc */
+    //Executa os algoritmos usando o array alocado com malloc
     escalonamento_round_robin(array_process, n_Proc, quantum, t_Troca, saida_texto);
     escalonamento_prioridade(array_process, n_Proc, t_Troca, saida_texto);
 

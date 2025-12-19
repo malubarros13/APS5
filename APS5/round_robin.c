@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "round_robin.h"
-#include "geral_process.h"
+#include "auxiliar.h"
 
 void escalonamento_round_robin(
     processo *processos,
@@ -15,43 +15,27 @@ void escalonamento_round_robin(
     int trocas_contexto = 0;
     int tempo_gasto_trocas = 0;
 
-    // Inicializa os processos
     inicializar_processos(processos, n);
 
     fprintf(saida, "=== Escalonamento Round Robin ===\n");
 
-    /*
-     * AQUI VAI A LÓGICA DO ROUND ROBIN:
-     *
-     * - controlar fila de prontos
-     * - inserir processos quando t_chegada == tempo_atual
-     * - escolher próximo processo
-     * - executar até quantum ou término
-     * - tratar preempção
-     * - registrar linha do tempo
-     * - contabilizar trocas de contexto
-     */
-    int fila[100];           // fila de prontos (IDs armazenados como índice)
-    int ini = 0, fim = 0;    // controle da fila
-    int em_execucao = -1;    // índice do processo atual
+    int *fila = (int*) malloc(n * sizeof(int));
+    int ini = 0, fim = 0; 
+    int em_execucao = -1; 
     int concluidos = 0;
 
     while (concluidos < n) {
-        // 1. Verificar quem chegou e colocar na fila (Critério ID se chegarem juntos)
         for (int i = 0; i < n; i++) {
             if (processos[i].t_chegada == tempo_atual) {
                 fila[fim++] = i;
             }
         }
 
-        // 2. Se a CPU está livre e há alguém na fila
         if (em_execucao == -1 && ini < fim) {
             em_execucao = fila[ini++];
             
-            // Registra a troca de contexto conforme o PDF [cite: 38]
             fprintf(saida, "%d-%d: Escalonador\n", tempo_atual, tempo_atual + t_troca - 1);
             
-            // Durante o tempo de troca de contexto, novos processos podem chegar!
             for (int t = 1; t <= t_troca; t++) {
                 tempo_atual++;
                 for (int i = 0; i < n; i++) {
@@ -70,7 +54,6 @@ void escalonamento_round_robin(
 
             fprintf(saida, "%d-%d: P%d\n", tempo_atual, tempo_atual + tempo_exec - 1, processos[p].id);
 
-            // Simula o tempo passando para checar novas chegadas durante a execução
             for (int t = 1; t <= tempo_exec; t++) {
                 tempo_atual++;
                 for (int i = 0; i < n; i++) {
@@ -86,13 +69,12 @@ void escalonamento_round_robin(
                 concluidos++;
                 em_execucao = -1;
             } else {
-                // Se não terminou, volta para o fim da fila
                 fila[fim++] = p;
                 em_execucao = -1;
             }
         } 
         else{
-            // CPU ociosa
+            //CPU ociosa
             tempo_atual++;
         }
     }

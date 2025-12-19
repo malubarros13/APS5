@@ -1,14 +1,13 @@
 #ifndef PROCESSO_H
 #define PROCESSO_H
 
-// Estrutura que representa um processo do sistema
 typedef struct {
-    int id;             // Identificador do processo
-    int t_chegada;      // Tempo de chegada/criação
-    int prioridade;     // Prioridade (menor valor = maior prioridade)
-    int t_cpu;          // Tempo TOTAL de CPU necessário
-    int t_restante;     // Tempo de CPU que ainda falta executar
-    int t_fim;          // Tempo em que o processo termina
+    int id;        
+    int t_chegada; //tempo de chegada
+    int prioridade;
+    int t_cpu; //tempo TOTAL de CPU necessário
+    int t_restante;//de CPU
+    int t_fim; //quando o processo termina
 } processo;
 
 

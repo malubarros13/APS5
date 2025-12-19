@@ -1,16 +1,15 @@
-#ifndef GERAL_PROCESS_H
-#define GERAL_PROCESS_H
+#ifndef AUXILIAR_H
+#define AUXILIAR_H
 
 #include <stdio.h>
 #include "processo.h"
 
-// Verifica se ainda existe algum processo não finalizado
+//autoexplicativo
 int existem_processos_ativos(processo *processos, int n);
 
-// Inicializa campos auxiliares dos processos
-void inicializar_processos(processo *processos, int n);
+//autoexplicativo
+void inicializar_processos(processo *processos, int n); 
 
-// Calcula e imprime métricas finais
 void imprimir_resultados(
     processo *processos,
     int n,

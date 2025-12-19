@@ -1,22 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "geral_process.h"
-
-/* -------------------------------------------------
-   Funções auxiliares (protótipos internos)
-   ------------------------------------------------- */
-
-/* -------------------------------------------------
-   Escalonamento Round Robin (preemptivo)
-   ------------------------------------------------- */
-
-/* -------------------------------------------------
-   Escalonamento por Prioridade (preemptivo)
-   ------------------------------------------------- */
-
-/* -------------------------------------------------
-   Implementação das funções auxiliares
-   ------------------------------------------------- */
+#include "auxiliar.h"
 
 void inicializar_processos(processo *processos, int n) {
     for (int i = 0; i < n; i++) {
