@@ -3,6 +3,32 @@
 #include "processo.h"
 #include "escalonador.h"
 
+typedef struct {
+    processo *dados;  // vetor de processos
+    int inicio;
+    int fim;
+    int capacidade;
+} fila_processos;
+
+void inicializar_fila(fila_processos *f, int capacidade) {
+    f->dados = malloc(capacidade * sizeof(processo));
+    f->inicio = 0;
+    f->fim = 0;
+    f->capacidade = capacidade;
+}
+
+void enfileirar(fila_processos *f, processo p) {
+    if (f->fim < f->capacidade) {
+        f->dados[f->fim] = p;
+        f->fim++;
+    }
+}
+
+void destruir_fila(fila_processos *f) {
+    free(f->dados);
+}
+
+
 int main() {
 
     int n_Proc, quantum, t_Troca; //infos da primeira linha
@@ -37,7 +63,10 @@ int main() {
         );
     }
 
-    //criar a FILA para 
+
+    /* Executa os algoritmos usando o array alocado com malloc */
+    escalonamento_round_robin(array_process, n_Proc, quantum, t_Troca, saida_texto);
+    escalonamento_prioridade(array_process, n_Proc, t_Troca, saida_texto);
 
 
     fclose(entrada_texto);
