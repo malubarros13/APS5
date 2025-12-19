@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "processo.h"
-#include "escalonador.h"
+#include "geral_process.h"
+#include "round_robin.h"
+#include "priority.h"
 
 typedef struct {
     processo *dados;  // vetor de processos
@@ -10,17 +13,17 @@ typedef struct {
     int capacidade;
 } fila_processos;
 
-void inicializar_fila(fila_processos *f, int capacidade) {
-    f->dados = malloc(capacidade * sizeof(processo));
-    f->inicio = 0;
-    f->fim = 0;
-    f->capacidade = capacidade;
+void inicializar_fila(fila_processos *fila, int capacidade) {
+    fila->dados = malloc(capacidade * sizeof(processo));
+    fila->inicio = 0;
+    fila->fim = 0;
+    fila->capacidade = capacidade;
 }
 
-void enfileirar(fila_processos *f, processo p) {
-    if (f->fim < f->capacidade) {
-        f->dados[f->fim] = p;
-        f->fim++;
+void enfileirar(fila_processos *fila, processo process) {
+    if (fila->fim < fila->capacidade) {
+        fila->dados[fila->fim] = process;
+        fila->fim++;
     }
 }
 
@@ -67,7 +70,6 @@ int main() {
     /* Executa os algoritmos usando o array alocado com malloc */
     escalonamento_round_robin(array_process, n_Proc, quantum, t_Troca, saida_texto);
     escalonamento_prioridade(array_process, n_Proc, t_Troca, saida_texto);
-
 
     fclose(entrada_texto);
     fclose(saida_texto);
